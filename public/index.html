@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>黄莹 - 个人信息中心</title>
-    <meta name="description" content="黄莹的个人信息中心 - 展示技能、项目和联系方式">
+    <title>黄莹 - 项目作品集</title>
+    <meta name="description" content="黄莹的项目作品集 - 展示创新的技术项目和解决方案">
     
     <!-- Firebase SDK -->
     <script defer src="/__/firebase/12.0.0/firebase-app-compat.js"></script>
@@ -13,10 +13,25 @@
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     
     <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --dark-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+            --text-muted: #a0aec0;
+            --bg-glass: rgba(255, 255, 255, 0.1);
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow-bold: 0 20px 60px rgba(0, 0, 0, 0.15);
+            --border-radius: 20px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -26,492 +41,930 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text-primary);
+            background: var(--dark-gradient);
+            overflow-x: hidden;
+        }
+
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-gradient);
+            border-radius: 10px;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 26, 46, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #667eea;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* 英雄区域 */
+        .hero {
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--dark-gradient);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #667eea 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            font-weight: 300;
+            animation: slideUp 1s ease-out 0.2s both;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            animation: slideUp 1s ease-out 0.4s both;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideUp 1s ease-out 0.6s both;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* 统计数据 */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+            animation: slideUp 1s ease-out 0.8s both;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-glass);
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* 项目展示区域 */
+        .projects {
+            padding: 8rem 0;
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 2rem;
         }
 
-        .header {
+        .section-header {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 40px 20px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 4rem;
         }
 
-        .profile-avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #667eea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: var(--bg-glass);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            transition: all 0.4s ease;
+            position: relative;
+            group: hover;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-bold);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .project-image {
+            height: 250px;
+            background: var(--primary-gradient);
+            position: relative;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 60px;
+        }
+
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0,0,0,0.1) 0%, rgba(255,255,255,0.1) 100%);
+        }
+
+        .project-image i {
+            font-size: 4rem;
             color: white;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+            position: relative;
         }
 
-        .header h1 {
-            font-size: 2.5rem;
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
             font-weight: 700;
-            color: #2d3748;
-            margin-bottom: 10px;
+            color: white;
+            margin-bottom: 1rem;
         }
 
-        .header .subtitle {
-            font-size: 1.2rem;
-            color: #718096;
-            margin-bottom: 20px;
+        .project-description {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
         }
 
-        .social-links {
+        .project-tech {
             display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .social-links a {
+        .tech-tag {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: transparent;
             color: white;
-            border-radius: 50%;
             text-decoration: none;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            font-size: 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
         }
 
-        .social-links a:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        .project-link:hover {
+            background: var(--primary-gradient);
+            border-color: transparent;
+            transform: translateY(-2px);
         }
 
-        .grid {
+        /* 技能栈展示 */
+        .skills {
+            padding: 6rem 0;
+            background: var(--dark-gradient);
+        }
+
+        .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
 
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 30px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .skill-category {
+            background: var(--bg-glass);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
         }
 
-        .card:hover {
+        .skill-category:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border-color: rgba(102, 126, 234, 0.3);
         }
 
-        .card-header {
+        .skill-category-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            gap: 0.8rem;
         }
 
-        .card-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            border-radius: 12px;
+        .skill-category-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-gradient);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.5rem;
-            margin-right: 15px;
         }
 
-        .card h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #2d3748;
-        }
-
-        .skill-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
+        .skill-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
         }
 
         .skill-item {
-            background: linear-gradient(135deg, #f7fafc, #edf2f7);
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            border: 2px solid transparent;
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
         }
 
         .skill-item:hover {
-            border-color: #667eea;
-            transform: scale(1.05);
+            background: rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.4);
+            color: white;
         }
 
-        .skill-icon {
-            font-size: 2rem;
-            margin-bottom: 8px;
-            color: #667eea;
+        /* 联系区域 */
+        .contact {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
         }
 
-        .project-item {
-            background: linear-gradient(135deg, #f7fafc, #edf2f7);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border-left: 4px solid #667eea;
-            transition: all 0.3s ease;
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .project-item:hover {
-            transform: translateX(5px);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
         }
 
-        .project-title {
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 8px;
-        }
-
-        .project-description {
-            color: #718096;
-            font-size: 0.9rem;
-        }
-
-        .contact-item {
+        .contact-link {
             display: flex;
             align-items: center;
-            padding: 15px;
-            background: linear-gradient(135deg, #f7fafc, #edf2f7);
-            border-radius: 12px;
-            margin-bottom: 15px;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: var(--bg-glass);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
             transition: all 0.3s ease;
         }
 
-        .contact-item:hover {
-            background: linear-gradient(135deg, #e2e8f0, #cbd5e0);
+        .contact-link:hover {
+            transform: translateY(-5px);
+            background: var(--primary-gradient);
+            border-color: transparent;
         }
 
         .contact-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            border-radius: 50%;
+            font-size: 1.5rem;
+        }
+
+        /* 页脚 */
+        .footer {
+            padding: 2rem 0;
+            background: rgba(26, 26, 46, 0.9);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* 加载动画 */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            margin-right: 15px;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
         }
 
-        .status-indicator {
-            display: inline-flex;
-            align-items: center;
-            background: #48bb78;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-top: 15px;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: white;
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #667eea;
             border-radius: 50%;
-            margin-right: 8px;
-            animation: pulse 2s infinite;
+            animation: spin 1s linear infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        .footer {
-            text-align: center;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            margin-top: 40px;
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            
-            .card {
-                padding: 20px;
-            }
+        /* 滚动指示器 */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            animation: bounce 2s infinite;
         }
 
-        .loading {
-            text-align: center;
-            padding: 20px;
-            color: #718096;
-            font-style: italic;
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-5px) translateX(-50%);
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header Section -->
-        <header class="header">
-            <div class="profile-avatar">
-                <i class="fas fa-user"></i>
-            </div>
-            <h1>黄莹</h1>
-            <p class="subtitle">全栈开发工程师 | 技术爱好者 | 终身学习者</p>
-            <div class="status-indicator">
-                <div class="status-dot"></div>
-                在线状态
-            </div>
-            <div class="social-links">
-                <a href="https://github.com/huangying-just" title="GitHub">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="mailto:your.email@example.com" title="邮箱">
-                    <i class="fas fa-envelope"></i>
-                </a>
-                <a href="https://linkedin.com/in/yourprofile" title="LinkedIn">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="https://twitter.com/yourhandle" title="Twitter">
-                    <i class="fab fa-twitter"></i>
-                </a>
-            </div>
-        </header>
+    <!-- 加载遮罩 -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
 
-        <!-- Main Content Grid -->
-        <div class="grid">
-            <!-- About Me Card -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-                    <h3>关于我</h3>
-                </div>
-                <p>我是一名充满热情的全栈开发工程师，专注于现代Web技术和云服务。热爱学习新技术，享受解决复杂问题的过程。致力于编写高质量、可维护的代码，并持续关注用户体验的优化。</p>
-                <br>
-                <p>目前专注于JavaScript生态系统、云原生技术和人工智能应用开发。</p>
-            </div>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">黄莹</div>
+            <ul class="nav-menu">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#projects">项目</a></li>
+                <li><a href="#skills">技能</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+        </div>
+    </nav>
 
-            <!-- Skills Card -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>技能专长</h3>
+    <!-- 英雄区域 -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">创新技术解决方案</h1>
+            <p class="hero-subtitle">全栈开发工程师 & 技术创新者</p>
+            <p class="hero-description">
+                专注于现代Web技术、云原生应用和人工智能解决方案。
+                致力于将创意转化为高质量的数字产品，推动技术创新和用户体验优化。
+            </p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">查看项目</a>
+                <a href="#contact" class="btn btn-secondary">联系合作</a>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">完成项目</div>
                 </div>
-                <div class="skill-grid">
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fab fa-js-square"></i>
-                        </div>
-                        <div>JavaScript</div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fab fa-python"></i>
-                        </div>
-                        <div>Python</div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fab fa-react"></i>
-                        </div>
-                        <div>React</div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fab fa-node-js"></i>
-                        </div>
-                        <div>Node.js</div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fas fa-database"></i>
-                        </div>
-                        <div>数据库</div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fab fa-aws"></i>
-                        </div>
-                        <div>云服务</div>
-                    </div>
+                <div class="stat-item">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">技术栈</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">客户满意度</div>
                 </div>
             </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
 
-            <!-- Projects Card -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-project-diagram"></i>
-                    </div>
-                    <h3>项目作品</h3>
-                </div>
-                <div class="project-item">
-                    <div class="project-title">🔥 Firebase 个人网站</div>
-                    <div class="project-description">
-                        基于Firebase Hosting构建的现代化个人网站，集成了CI/CD自动部署流程。
-                    </div>
-                </div>
-                <div class="project-item">
-                    <div class="project-title">📱 React Native 移动应用</div>
-                    <div class="project-description">
-                        跨平台移动应用开发，实现了用户认证、数据同步等核心功能。
-                    </div>
-                </div>
-                <div class="project-item">
-                    <div class="project-title">🤖 AI 聊天机器人</div>
-                    <div class="project-description">
-                        基于自然语言处理技术的智能对话系统，支持多轮对话和上下文理解。
-                    </div>
-                </div>
+    <!-- 项目展示区域 -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">精选项目</h2>
+                <p class="section-subtitle">
+                    展示我在不同技术领域的创新项目和解决方案，每个项目都体现了对技术的深度理解和创新思维。
+                </p>
             </div>
+            
+            <div class="projects-grid">
+                <!-- 项目卡片模板 - 您可以复制这个结构来添加新项目 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">现代化Web应用</h3>
+                        <p class="project-description">
+                            基于React和Node.js构建的全栈Web应用，具有实时数据同步、用户认证和响应式设计等功能。
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">WebSocket</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i>
+                                查看代码
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                                在线演示
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-            <!-- Contact Card -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-address-book"></i>
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-mobile-alt"></i>
                     </div>
-                    <h3>联系方式</h3>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <div>
-                        <strong>邮箱</strong><br>
-                        <span style="color: #718096;">your.email@example.com</span>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fab fa-github"></i>
-                    </div>
-                    <div>
-                        <strong>GitHub</strong><br>
-                        <span style="color: #718096;">huangying-just</span>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div>
-                        <strong>位置</strong><br>
-                        <span style="color: #718096;">中国</span>
+                    <div class="project-content">
+                        <h3 class="project-title">跨平台移动应用</h3>
+                        <p class="project-description">
+                            使用React Native开发的跨平台移动应用，集成了地理位置、推送通知和离线数据存储功能。
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React Native</span>
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">Redux</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i>
+                                查看代码
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fas fa-download"></i>
+                                下载应用
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Experience Card -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-briefcase"></i>
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-robot"></i>
                     </div>
-                    <h3>工作经验</h3>
-                </div>
-                <div class="project-item">
-                    <div class="project-title">全栈开发工程师</div>
-                    <div class="project-description">
-                        负责Web应用的前后端开发，参与系统架构设计，优化应用性能。
+                    <div class="project-content">
+                        <h3 class="project-title">AI智能助手</h3>
+                        <p class="project-description">
+                            基于自然语言处理技术的智能对话系统，支持多轮对话、情感分析和个性化回复。
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">NLP</span>
+                            <span class="tech-tag">FastAPI</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i>
+                                查看代码
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fas fa-play"></i>
+                                体验Demo
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="project-item">
-                    <div class="project-title">技术顾问</div>
-                    <div class="project-description">
-                        为初创公司提供技术咨询服务，协助制定技术栈选型和开发规范。
-                    </div>
-                </div>
-            </div>
 
-            <!-- Education Card -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-graduation-cap"></i>
+                <!-- 添加更多项目的占位卡片 -->
+                <div class="project-card" style="background: rgba(255, 255, 255, 0.05); border: 2px dashed rgba(255, 255, 255, 0.2);">
+                    <div class="project-image" style="background: rgba(102, 126, 234, 0.1);">
+                        <i class="fas fa-plus" style="color: rgba(255, 255, 255, 0.5);"></i>
                     </div>
-                    <h3>教育背景</h3>
-                </div>
-                <div class="project-item">
-                    <div class="project-title">计算机科学与技术</div>
-                    <div class="project-description">
-                        本科学位，专注于软件工程和算法设计。
-                    </div>
-                </div>
-                <div class="project-item">
-                    <div class="project-title">持续学习</div>
-                    <div class="project-description">
-                        通过在线课程、技术会议和开源项目不断提升技能。
+                    <div class="project-content">
+                        <h3 class="project-title" style="color: rgba(255, 255, 255, 0.6);">即将推出...</h3>
+                        <p class="project-description">
+                            更多精彩项目正在开发中，敬请期待！
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag" style="background: rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.5);">Coming Soon</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <p>© 2025 黄莹 - 个人信息中心</p>
-            <p style="color: #718096; font-size: 0.9rem; margin-top: 10px;">
-                基于 Firebase Hosting 构建 | 
-                <span id="firebase-status" class="loading">正在加载 Firebase SDK...</span>
+    <!-- 技能栈展示 -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">技术栈</h2>
+                <p class="section-subtitle">
+                    掌握现代开发技术栈，持续学习新技术，保持技术前沿性。
+                </p>
+            </div>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3 class="skill-category-title">
+                        <div class="skill-category-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        前端开发
+                    </h3>
+                    <div class="skill-items">
+                        <span class="skill-item">React</span>
+                        <span class="skill-item">Vue.js</span>
+                        <span class="skill-item">TypeScript</span>
+                        <span class="skill-item">Next.js</span>
+                        <span class="skill-item">Tailwind CSS</span>
+                        <span class="skill-item">SCSS</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-category-title">
+                        <div class="skill-category-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        后端开发
+                    </h3>
+                    <div class="skill-items">
+                        <span class="skill-item">Node.js</span>
+                        <span class="skill-item">Python</span>
+                        <span class="skill-item">Express</span>
+                        <span class="skill-item">FastAPI</span>
+                        <span class="skill-item">PostgreSQL</span>
+                        <span class="skill-item">MongoDB</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-category-title">
+                        <div class="skill-category-icon">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        云服务 & DevOps
+                    </h3>
+                    <div class="skill-items">
+                        <span class="skill-item">AWS</span>
+                        <span class="skill-item">Docker</span>
+                        <span class="skill-item">Firebase</span>
+                        <span class="skill-item">GitHub Actions</span>
+                        <span class="skill-item">Vercel</span>
+                        <span class="skill-item">Nginx</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="skill-category-title">
+                        <div class="skill-category-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        AI & 数据科学
+                    </h3>
+                    <div class="skill-items">
+                        <span class="skill-item">TensorFlow</span>
+                        <span class="skill-item">PyTorch</span>
+                        <span class="skill-item">OpenAI API</span>
+                        <span class="skill-item">Pandas</span>
+                        <span class="skill-item">NumPy</span>
+                        <span class="skill-item">Jupyter</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系区域 -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">联系合作</h2>
+                <p class="section-subtitle">
+                    有项目想法或合作机会？欢迎联系我，让我们一起创造出色的数字产品。
+                </p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-links">
+                    <a href="mailto:your.email@example.com" class="contact-link">
+                        <i class="fas fa-envelope contact-icon"></i>
+                        <div>
+                            <div style="font-weight: 600;">邮箱联系</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">your.email@example.com</div>
+                        </div>
+                    </a>
+                    
+                    <a href="https://github.com/huangying-just" class="contact-link">
+                        <i class="fab fa-github contact-icon"></i>
+                        <div>
+                            <div style="font-weight: 600;">GitHub</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">huangying-just</div>
+                        </div>
+                    </a>
+                    
+                    <a href="https://linkedin.com/in/yourprofile" class="contact-link">
+                        <i class="fab fa-linkedin contact-icon"></i>
+                        <div>
+                            <div style="font-weight: 600;">LinkedIn</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">专业连接</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 黄莹 - 项目作品集 | 基于 Firebase Hosting 构建</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+                <span id="firebase-status">正在加载 Firebase SDK...</span>
             </p>
-        </footer>
-    </div>
+        </div>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const statusEl = document.querySelector('#firebase-status');
-            
-            // 添加平滑滚动效果
+            // 隐藏加载遮罩
+            setTimeout(() => {
+                document.getElementById('loading-overlay').classList.add('hidden');
+            }, 1000);
+
+            // 平滑滚动
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
                 });
             });
 
-            // 添加卡片动画
+            // 导航栏滚动效果
+            window.addEventListener('scroll', () => {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 100) {
+                    navbar.style.background = 'rgba(26, 26, 46, 0.95)';
+                } else {
+                    navbar.style.background = 'rgba(26, 26, 46, 0.9)';
+                }
+            });
+
+            // 滚动动画观察器
             const observerOptions = {
                 threshold: 0.1,
                 rootMargin: '0px 0px -50px 0px'
@@ -526,23 +979,56 @@
                 });
             }, observerOptions);
 
-            document.querySelectorAll('.card').forEach(card => {
+            // 为卡片添加滚动动画
+            document.querySelectorAll('.project-card, .skill-category').forEach(card => {
                 card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
                 observer.observe(card);
             });
 
+            // 统计数字动画
+            const animateStats = () => {
+                const stats = document.querySelectorAll('.stat-number');
+                stats.forEach(stat => {
+                    const target = parseInt(stat.textContent);
+                    let current = 0;
+                    const increment = target / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(timer);
+                        }
+                        stat.textContent = Math.floor(current) + (target === 100 ? '%' : '+');
+                    }, 30);
+                });
+            };
+
+            // 当统计区域进入视窗时启动动画
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateStats();
+                        statsObserver.unobserve(entry.target);
+                    }
+                });
+            });
+
+            const statsSection = document.querySelector('.stats');
+            if (statsSection) {
+                statsObserver.observe(statsSection);
+            }
+
             // Firebase SDK 状态检查
+            const statusEl = document.querySelector('#firebase-status');
             try {
                 setTimeout(() => {
                     if (typeof firebase !== 'undefined') {
                         const app = firebase.app();
                         const features = [
                             'auth', 
-                            'firestore',
-                            'functions',
-                            'storage'
+                            'firestore'
                         ].filter(feature => typeof app[feature] === 'function');
                         
                         statusEl.textContent = `Firebase SDK 已加载 (${features.join(', ')})`;
@@ -551,29 +1037,53 @@
                         statusEl.textContent = 'Firebase SDK 加载失败';
                         statusEl.style.color = '#f56565';
                     }
-                }, 1000);
+                }, 2000);
             } catch (e) {
                 console.error('Firebase SDK 错误:', e);
                 statusEl.textContent = 'Firebase SDK 加载错误';
                 statusEl.style.color = '#f56565';
             }
 
-            // 添加打字机效果
-            const subtitle = document.querySelector('.subtitle');
-            if (subtitle) {
-                const text = subtitle.textContent;
-                subtitle.textContent = '';
-                let i = 0;
-                const timer = setInterval(() => {
-                    if (i < text.length) {
-                        subtitle.textContent += text.charAt(i);
-                        i++;
-                    } else {
-                        clearInterval(timer);
-                    }
-                }, 100);
-            }
+            // 添加键盘导航支持
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    // ESC键关闭任何打开的模态框或菜单
+                }
+            });
+
+            // 预加载关键资源
+            const preloadImages = () => {
+                // 如果有项目图片，可以在这里预加载
+            };
+
+            preloadImages();
         });
+
+        // 添加一些实用函数
+        const utils = {
+            // 节流函数
+            throttle: (func, limit) => {
+                let inThrottle;
+                return function() {
+                    const args = arguments;
+                    const context = this;
+                    if (!inThrottle) {
+                        func.apply(context, args);
+                        inThrottle = true;
+                        setTimeout(() => inThrottle = false, limit);
+                    }
+                }
+            },
+
+            // 防抖函数
+            debounce: (func, delay) => {
+                let timeoutId;
+                return function (...args) {
+                    clearTimeout(timeoutId);
+                    timeoutId = setTimeout(() => func.apply(this, args), delay);
+                };
+            }
+        };
     </script>
 </body>
 </html>
