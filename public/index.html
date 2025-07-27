@@ -2142,77 +2142,213 @@
         let currentPage = 1;
         const articlesPerPage = 6;
 
-        // 模拟博客文章数据（按时间倒序）
-        function getBlogArticles() {
-            return [
-                {
-                    id: 'firebase-auth-guide',
-                    title: 'Firebase Authentication 完整实现指南',
-                    date: '2025-01-27',
-                    author: 'HUANGYING',
-                    tags: ['Firebase', '认证', 'Web安全', '技术教程'],
-                    excerpt: '详细介绍如何在Web应用中集成Firebase Authentication，包括邮箱登录、Google登录和用户状态管理。',
-                    content: '在现代Web应用开发中，用户认证是必不可少的功能...',
-                    readingTime: '约 8 分钟阅读'
-                },
-                {
-                    id: 'project-launch',
-                    title: '项目作品集网站正式上线！',
-                    date: '2025-01-27',
-                    author: 'HUANGYING',
-                    tags: ['项目启动', 'Firebase', 'Web开发'],
-                    excerpt: '经过一天的开发，我的个人项目作品集网站终于正式上线了！这篇文章记录了整个开发过程和技术选型。',
-                    content: '今天是一个值得纪念的日子！经过一天紧张而充实的开发工作...',
-                    readingTime: '约 5 分钟阅读'
-                },
-                {
-                    id: 'astro-experience',
-                    title: '探索Astro：现代静态站点生成器',
-                    date: '2025-01-26',
-                    author: 'HUANGYING',
-                    tags: ['Astro', 'Web开发', '性能优化'],
-                    excerpt: 'Astro是一个现代化的静态站点生成器，专注于性能和开发体验。本文分享我使用Astro的实践经验。',
-                    content: 'Astro是一个革命性的前端框架，它改变了我们构建网站的方式...',
-                    readingTime: '约 6 分钟阅读'
-                },
-                {
-                    id: 'web-performance',
-                    title: 'Web性能优化实战指南',
-                    date: '2025-01-25',
-                    author: 'HUANGYING',
-                    tags: ['性能优化', 'Web开发', '技术教程'],
-                    excerpt: '分享Web性能优化的实用技巧和最佳实践，帮助你构建更快速的Web应用。',
-                    content: 'Web性能对用户体验至关重要。本文将介绍各种优化技术...',
-                    readingTime: '约 7 分钟阅读'
-                },
-                {
-                    id: 'react-hooks',
-                    title: 'React Hooks深度解析',
-                    date: '2025-01-24',
-                    author: 'HUANGYING',
-                    tags: ['React', 'JavaScript', '技术教程'],
-                    excerpt: '深入探讨React Hooks的工作原理、最佳实践和常见陷阱，助你成为Hook大师。',
-                    content: 'React Hooks彻底改变了React应用的编写方式...',
-                    readingTime: '约 9 分钟阅读'
-                },
-                {
-                    id: 'css-grid-guide',
-                    title: 'CSS Grid布局完全指南',
-                    date: '2025-01-23',
-                    author: 'HUANGYING',
-                    tags: ['CSS', 'Web开发', '布局'],
-                    excerpt: 'CSS Grid是强大的二维布局系统。本文将带你全面掌握Grid布局的各种技巧。',
-                    content: 'CSS Grid为Web布局带来了革命性的变化...',
-                    readingTime: '约 10 分钟阅读'
+        // 简单的markdown解析器
+        function parseMarkdown(content) {
+            // 解析front matter
+            const frontMatterMatch = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+            if (!frontMatterMatch) return null;
+
+            const frontMatter = {};
+            const frontMatterLines = frontMatterMatch[1].split('\n');
+            frontMatterLines.forEach(line => {
+                const colonIndex = line.indexOf(':');
+                if (colonIndex > -1) {
+                    const key = line.substring(0, colonIndex).trim();
+                    let value = line.substring(colonIndex + 1).trim();
+                    
+                    // 移除引号
+                    if ((value.startsWith('"') && value.endsWith('"')) || 
+                        (value.startsWith("'") && value.endsWith("'"))) {
+                        value = value.slice(1, -1);
+                    }
+                    
+                    // 解析数组（tags）
+                    if (value.startsWith('[') && value.endsWith(']')) {
+                        value = value.slice(1, -1).split(',').map(item => 
+                            item.trim().replace(/['"]/g, '')
+                        );
+                    }
+                    
+                    frontMatter[key] = value;
                 }
-            ];
+            });
+
+            // 获取markdown内容
+            let markdownContent = frontMatterMatch[2];
+            
+            // 简单的markdown到HTML转换
+            markdownContent = markdownContent
+                // 代码块（需要在其他规则之前处理）
+                .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+                // 表格处理
+                .replace(/\|(.+)\|\n\|([-:\s\|]+)\|\n((?:\|.+\|\n?)*)/g, (match, header, divider, rows) => {
+                    const headerCells = header.split('|').map(cell => cell.trim()).filter(cell => cell);
+                    const rowCells = rows.trim().split('\n').map(row => 
+                        row.split('|').map(cell => cell.trim()).filter(cell => cell)
+                    );
+                    
+                    let table = '<table><thead><tr>';
+                    headerCells.forEach(cell => {
+                        table += `<th>${cell}</th>`;
+                    });
+                    table += '</tr></thead><tbody>';
+                    
+                    rowCells.forEach(row => {
+                        table += '<tr>';
+                        row.forEach(cell => {
+                            table += `<td>${cell}</td>`;
+                        });
+                        table += '</tr>';
+                    });
+                    
+                    table += '</tbody></table>';
+                    return table;
+                })
+                // 有序列表
+                .replace(/^\d+\.\s(.+)$/gm, '<li>$1</li>')
+                // 无序列表
+                .replace(/^[-*+]\s(.+)$/gm, '<li>$1</li>')
+                // 包装列表项
+                .replace(/(<li>.*<\/li>)/gs, (match) => {
+                    return '<ul>' + match + '</ul>';
+                })
+                // 标题
+                .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                // 粗体
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                // 斜体
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                // 行内代码
+                .replace(/`(.*?)`/g, '<code>$1</code>')
+                // 链接
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+                // 段落分隔
+                .replace(/\n\s*\n/g, '</p><p>')
+                // 换行
+                .replace(/\n/g, '<br>');
+
+            // 包装段落（避免包装已有的HTML标签）
+            if (markdownContent && !markdownContent.includes('<h') && !markdownContent.includes('<ul') && !markdownContent.includes('<table')) {
+                markdownContent = '<p>' + markdownContent + '</p>';
+            }
+
+            return {
+                frontMatter,
+                content: markdownContent
+            };
+        }
+
+        // 估算阅读时间
+        function estimateReadingTime(content) {
+            const wordsPerMinute = 200; // 中文阅读速度
+            const textContent = content.replace(/<[^>]*>/g, ''); // 移除HTML标签
+            const wordCount = textContent.length;
+            const minutes = Math.ceil(wordCount / wordsPerMinute);
+            return `约 ${minutes} 分钟阅读`;
+        }
+
+        // 从markdown文件加载博客文章
+        async function loadBlogFromFiles() {
+            let blogFiles = [];
+            
+            try {
+                // 从articles.json获取文章列表
+                const articlesResponse = await fetch('/blog/articles.json');
+                if (articlesResponse.ok) {
+                    const articlesData = await articlesResponse.json();
+                    blogFiles = articlesData.articles || [];
+                } else {
+                    // 如果articles.json不存在，使用默认列表
+                    blogFiles = [
+                        '2025-01-27-firebase-auth-guide.md',
+                        '2025-01-27-project-launch.md'
+                    ];
+                }
+            } catch (error) {
+                console.warn('无法加载文章列表，使用默认列表:', error);
+                blogFiles = [
+                    '2025-01-27-firebase-auth-guide.md',
+                    '2025-01-27-project-launch.md'
+                ];
+            }
+
+            const articles = [];
+
+            for (const filename of blogFiles) {
+                try {
+                    const response = await fetch(`/blog/${filename}`);
+                    if (!response.ok) continue;
+                    
+                    const content = await response.text();
+                    const parsed = parseMarkdown(content);
+                    
+                    if (parsed && parsed.frontMatter) {
+                        const fm = parsed.frontMatter;
+                        const articleId = filename.replace('.md', '');
+                        
+                        articles.push({
+                            id: articleId,
+                            title: fm.title || '无标题',
+                            date: fm.date || new Date().toISOString().split('T')[0],
+                            author: fm.author || 'HUANGYING',
+                            tags: Array.isArray(fm.tags) ? fm.tags : ['技术'],
+                            excerpt: fm.excerpt || '暂无摘要',
+                            content: parsed.content,
+                            readingTime: estimateReadingTime(parsed.content),
+                            coverImage: fm.coverImage || '/assets/images/default-blog.jpg'
+                        });
+                    }
+                } catch (error) {
+                    console.error(`加载文章 ${filename} 失败:`, error);
+                }
+            }
+
+            // 按日期倒序排列
+            articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+            return articles;
+        }
+
+        // 获取博客文章（从文件加载）
+        async function getBlogArticles() {
+            if (blogArticles.length === 0) {
+                blogArticles = await loadBlogFromFiles();
+            }
+            return blogArticles;
         }
 
         // 加载博客文章
-        function loadBlogArticles() {
-            blogArticles = getBlogArticles();
-            renderBlogArticles();
-            setupBlogFilters();
+        async function loadBlogArticles() {
+            try {
+                // 显示加载状态
+                const blogGrid = document.getElementById('blog-grid');
+                if (blogGrid) {
+                    blogGrid.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                            <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: rgba(255,255,255,0.6); margin-bottom: 1rem;"></i>
+                            <p style="color: rgba(255,255,255,0.7);">正在加载博客文章...</p>
+                        </div>
+                    `;
+                }
+
+                blogArticles = await getBlogArticles();
+                renderBlogArticles();
+                setupBlogFilters();
+                
+                console.log(`成功加载 ${blogArticles.length} 篇文章`);
+            } catch (error) {
+                console.error('加载博客文章失败:', error);
+                const blogGrid = document.getElementById('blog-grid');
+                if (blogGrid) {
+                    blogGrid.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: #ff6b6b; margin-bottom: 1rem;"></i>
+                            <p style="color: rgba(255,255,255,0.7);">加载博客文章失败，请稍后重试</p>
+                        </div>
+                    `;
+                }
+            }
         }
 
         // 渲染博客文章
@@ -2359,8 +2495,7 @@
                         </div>
                     </div>
                     <div class="article-content">
-                        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">${article.excerpt}</p>
-                        <div style="line-height: 1.8;">${article.content}</div>
+                        <div class="article-body" style="line-height: 1.8;">${article.content}</div>
                         
                         <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #eee;">
                             <h3>分享这篇文章</h3>
@@ -2478,6 +2613,105 @@
                     padding: 2rem;
                     line-height: 1.8;
                     color: #2d3748;
+                }
+
+                .article-body h1, .article-body h2, .article-body h3 {
+                    margin: 2rem 0 1rem 0;
+                    color: #1a1a1a;
+                    font-weight: 600;
+                }
+
+                .article-body h1 {
+                    font-size: 2rem;
+                    border-bottom: 2px solid #e2e8f0;
+                    padding-bottom: 0.5rem;
+                }
+
+                .article-body h2 {
+                    font-size: 1.5rem;
+                }
+
+                .article-body h3 {
+                    font-size: 1.3rem;
+                }
+
+                .article-body p {
+                    margin: 1rem 0;
+                    line-height: 1.8;
+                }
+
+                .article-body code {
+                    background: #f7fafc;
+                    color: #e53e3e;
+                    padding: 0.2rem 0.4rem;
+                    border-radius: 4px;
+                    font-family: 'Courier New', monospace;
+                    font-size: 0.9em;
+                }
+
+                .article-body pre {
+                    background: #1a202c;
+                    color: #e2e8f0;
+                    padding: 1.5rem;
+                    border-radius: 8px;
+                    overflow-x: auto;
+                    margin: 1.5rem 0;
+                    border-left: 4px solid #667eea;
+                }
+
+                .article-body pre code {
+                    background: none;
+                    color: inherit;
+                    padding: 0;
+                    font-family: 'Courier New', monospace;
+                    font-size: 0.9em;
+                }
+
+                .article-body strong {
+                    font-weight: 600;
+                    color: #1a1a1a;
+                }
+
+                .article-body em {
+                    font-style: italic;
+                    color: #4a5568;
+                }
+
+                .article-body a {
+                    color: #667eea;
+                    text-decoration: none;
+                    border-bottom: 1px solid transparent;
+                    transition: border-bottom 0.2s;
+                }
+
+                .article-body a:hover {
+                    border-bottom-color: #667eea;
+                }
+
+                .article-body table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 1.5rem 0;
+                }
+
+                .article-body th, .article-body td {
+                    padding: 0.75rem;
+                    border: 1px solid #e2e8f0;
+                    text-align: left;
+                }
+
+                .article-body th {
+                    background: #f7fafc;
+                    font-weight: 600;
+                }
+
+                .article-body ul, .article-body ol {
+                    margin: 1rem 0;
+                    padding-left: 2rem;
+                }
+
+                .article-body li {
+                    margin: 0.5rem 0;
                 }
 
                 @media (max-width: 768px) {
