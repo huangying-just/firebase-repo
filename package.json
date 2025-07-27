@@ -1,6 +1,24 @@
 {
+  "name": "huangying-webhosting",
+  "version": "1.0.0",
+  "description": "Firebase hosting project",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'Build completed' && cp -r public dist",
+    "start": "firebase serve",
+    "deploy": "firebase deploy",
+    "test": "echo 'No tests specified'"
+  },
   "dependencies": {
     "firebase": "^12.0.0",
     "nodejs": "^0.0.0"
-  }
+  },
+  "devDependencies": {},
+  "keywords": [
+    "firebase",
+    "hosting",
+    "web"
+  ],
+  "author": "huangying",
+  "license": "MIT"
 }
