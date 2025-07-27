@@ -123,6 +123,331 @@
             width: 100%;
         }
 
+        /* 用户认证区域 */
+        .auth-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .auth-btn {
+            padding: 0.5rem 1rem;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .auth-btn.secondary {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .user-menu {
+            position: relative;
+            display: none;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 10px;
+            padding: 0.5rem 0;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 0.75rem 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: background 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 0.5rem 0;
+        }
+
+        /* 认证模态框 */
+        .auth-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .auth-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .auth-modal-content {
+            background: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .auth-modal.show .auth-modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            background: #f7fafc;
+            padding: 0.25rem;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 0.75rem;
+            background: none;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .auth-tab.active {
+            background: white;
+            color: var(--text-primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .form-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e2e8f0;
+        }
+
+        .auth-divider span {
+            padding: 0 1rem;
+            font-size: 0.9rem;
+        }
+
+        .google-btn {
+            width: 100%;
+            padding: 0.875rem;
+            background: white;
+            color: var(--text-primary);
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .google-btn:hover {
+            border-color: #667eea;
+            background: #f7fafc;
+        }
+
+        .error-message {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .success-message {
+            background: #c6f6d5;
+            color: #2f855a;
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* 受保护内容区域 */
+        .protected-content {
+            background: var(--bg-glass);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            display: none;
+        }
+
+        .protected-content.show {
+            display: block;
+        }
+
+        .protected-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .protected-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
         /* 英雄区域 */
         .hero {
             min-height: 100vh;
@@ -573,6 +898,15 @@
                 flex-direction: column;
                 align-items: center;
             }
+
+            .auth-section {
+                gap: 0.5rem;
+            }
+
+            .auth-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
         }
 
         /* 加载动画 */
@@ -648,8 +982,108 @@
                 <li><a href="#skills">技能</a></li>
                 <li><a href="#contact">联系</a></li>
             </ul>
+            
+            <!-- 认证区域 -->
+            <div class="auth-section">
+                <div id="auth-buttons" class="auth-buttons">
+                    <button class="auth-btn" onclick="openAuthModal('login')">
+                        <i class="fas fa-sign-in-alt"></i>
+                        登录
+                    </button>
+                    <button class="auth-btn secondary" onclick="openAuthModal('register')">
+                        <i class="fas fa-user-plus"></i>
+                        注册
+                    </button>
+                </div>
+                
+                <div id="user-menu" class="user-menu">
+                    <div class="user-avatar" onclick="toggleUserDropdown()">
+                        <span id="user-initial">U</span>
+                    </div>
+                    <div id="user-dropdown" class="user-dropdown">
+                        <div class="dropdown-item">
+                            <i class="fas fa-user"></i>
+                            <span id="user-email">user@example.com</span>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item" onclick="showProfile()">
+                            <i class="fas fa-cog"></i>
+                            个人设置
+                        </div>
+                        <div class="dropdown-item" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            退出登录
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </nav>
+
+    <!-- 认证模态框 -->
+    <div id="auth-modal" class="auth-modal">
+        <div class="auth-modal-content">
+            <button class="modal-close" onclick="closeAuthModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">登录</button>
+                <button class="auth-tab" onclick="switchAuthTab('register')">注册</button>
+            </div>
+
+            <div id="auth-error" class="error-message" style="display: none;"></div>
+            <div id="auth-success" class="success-message" style="display: none;"></div>
+
+            <!-- 登录表单 -->
+            <form id="login-form" class="auth-form active">
+                <div class="form-group">
+                    <label class="form-label">邮箱地址</label>
+                    <input type="email" class="form-input" placeholder="请输入邮箱地址" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">密码</label>
+                    <input type="password" class="form-input" placeholder="请输入密码" required>
+                </div>
+                <button type="submit" class="form-submit">登录</button>
+                
+                <div class="auth-divider">
+                    <span>或者</span>
+                </div>
+                
+                <button type="button" class="google-btn" onclick="signInWithGoogle()">
+                    <i class="fab fa-google"></i>
+                    使用 Google 登录
+                </button>
+            </form>
+
+            <!-- 注册表单 -->
+            <form id="register-form" class="auth-form">
+                <div class="form-group">
+                    <label class="form-label">邮箱地址</label>
+                    <input type="email" class="form-input" placeholder="请输入邮箱地址" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">密码</label>
+                    <input type="password" class="form-input" placeholder="至少6位字符" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">确认密码</label>
+                    <input type="password" class="form-input" placeholder="请再次输入密码" required>
+                </div>
+                <button type="submit" class="form-submit">注册</button>
+                
+                <div class="auth-divider">
+                    <span>或者</span>
+                </div>
+                
+                <button type="button" class="google-btn" onclick="signInWithGoogle()">
+                    <i class="fab fa-google"></i>
+                    使用 Google 注册
+                </button>
+            </form>
+        </div>
+    </div>
 
     <!-- 英雄区域 -->
     <section id="home" class="hero">
@@ -678,6 +1112,18 @@
                     <div class="stat-number">100%</div>
                     <div class="stat-label">客户满意度</div>
                 </div>
+            </div>
+
+            <!-- 受保护内容区域 -->
+            <div id="protected-content" class="protected-content">
+                <h3 class="protected-title">
+                    <i class="fas fa-lock"></i>
+                    会员专享内容
+                </h3>
+                <p class="protected-description">
+                    感谢您的登录！作为注册用户，您现在可以访问更多精彩内容，包括详细的项目源码、技术文档和独家教程。
+                    我们将持续为您提供最新的技术资讯和开发经验分享。
+                </p>
             </div>
         </div>
         
@@ -754,61 +1200,61 @@
                     </div>
                 </div>
 
-                                 <div class="project-card">
-                     <div class="project-image">
-                         <i class="fas fa-rocket"></i>
-                     </div>
-                     <div class="project-content">
-                         <h3 class="project-title">Astro 现代化网站</h3>
-                         <p class="project-description">
-                             掌握Astro开发与应用，构建高性能的现代化网站。利用Astro的静态站点生成能力和组件化架构，实现卓越的用户体验。
-                         </p>
-                         <div class="project-tech">
-                             <span class="tech-tag">Astro</span>
-                             <span class="tech-tag">TypeScript</span>
-                             <span class="tech-tag">React</span>
-                             <span class="tech-tag">Tailwind CSS</span>
-                         </div>
-                         <div class="project-links">
-                             <a href="#" class="project-link">
-                                 <i class="fab fa-github"></i>
-                                 查看代码
-                             </a>
-                             <a href="https://astro.cflp.ai" class="project-link">
-                                 <i class="fas fa-external-link-alt"></i>
-                                 在线演示
-                             </a>
-                         </div>
-                     </div>
-                 </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Astro 现代化网站</h3>
+                        <p class="project-description">
+                            掌握Astro开发与应用，构建高性能的现代化网站。利用Astro的静态站点生成能力和组件化架构，实现卓越的用户体验。
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Astro</span>
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Tailwind CSS</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i>
+                                查看代码
+                            </a>
+                            <a href="https://astro.cflp.ai" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                                在线演示
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-                 <div class="project-card">
-                     <div class="project-image">
-                         <i class="fas fa-robot"></i>
-                     </div>
-                     <div class="project-content">
-                         <h3 class="project-title">AI智能助手</h3>
-                         <p class="project-description">
-                             基于自然语言处理技术的智能对话系统，支持多轮对话、情感分析和个性化回复。
-                         </p>
-                         <div class="project-tech">
-                             <span class="tech-tag">Python</span>
-                             <span class="tech-tag">TensorFlow</span>
-                             <span class="tech-tag">NLP</span>
-                             <span class="tech-tag">FastAPI</span>
-                         </div>
-                         <div class="project-links">
-                             <a href="#" class="project-link">
-                                 <i class="fab fa-github"></i>
-                                 查看代码
-                             </a>
-                             <a href="#" class="project-link">
-                                 <i class="fas fa-play"></i>
-                                 体验Demo
-                             </a>
-                         </div>
-                     </div>
-                 </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">AI智能助手</h3>
+                        <p class="project-description">
+                            基于自然语言处理技术的智能对话系统，支持多轮对话、情感分析和个性化回复。
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">NLP</span>
+                            <span class="tech-tag">FastAPI</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i>
+                                查看代码
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fas fa-play"></i>
+                                体验Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- 添加更多项目的占位卡片 -->
                 <div class="project-card" style="background: rgba(255, 255, 255, 0.05); border: 2px dashed rgba(255, 255, 255, 0.2);">
@@ -847,15 +1293,15 @@
                         </div>
                         前端开发
                     </h3>
-                                         <div class="skill-items">
-                         <span class="skill-item">React</span>
-                         <span class="skill-item">Vue.js</span>
-                         <span class="skill-item">Astro</span>
-                         <span class="skill-item">TypeScript</span>
-                         <span class="skill-item">Next.js</span>
-                         <span class="skill-item">Tailwind CSS</span>
-                         <span class="skill-item">SCSS</span>
-                     </div>
+                    <div class="skill-items">
+                        <span class="skill-item">React</span>
+                        <span class="skill-item">Vue.js</span>
+                        <span class="skill-item">Astro</span>
+                        <span class="skill-item">TypeScript</span>
+                        <span class="skill-item">Next.js</span>
+                        <span class="skill-item">Tailwind CSS</span>
+                        <span class="skill-item">SCSS</span>
+                    </div>
                 </div>
 
                 <div class="skill-category">
@@ -924,7 +1370,7 @@
             
             <div class="contact-content">
                 <div class="contact-links">
-                    <a href="mailto:your.email@example.com" class="contact-link">
+                    <a href="mailto:huangying.just@gmail.com" class="contact-link">
                         <i class="fas fa-envelope contact-icon"></i>
                         <div>
                             <div style="font-weight: 600;">邮箱联系</div>
@@ -963,6 +1409,10 @@
     </footer>
 
     <script>
+        // 全局变量
+        let currentUser = null;
+        let userDropdownVisible = false;
+
         document.addEventListener('DOMContentLoaded', function() {
             // 隐藏加载遮罩
             setTimeout(() => {
@@ -1049,6 +1499,20 @@
                 statsObserver.observe(statsSection);
             }
 
+            // 初始化Firebase认证
+            initializeAuth();
+
+            // 表单提交事件
+            document.getElementById('login-form').addEventListener('submit', handleLogin);
+            document.getElementById('register-form').addEventListener('submit', handleRegister);
+
+            // 点击外部关闭下拉菜单
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.user-menu')) {
+                    hideUserDropdown();
+                }
+            });
+
             // Firebase SDK 状态检查
             const statusEl = document.querySelector('#firebase-status');
             try {
@@ -1072,47 +1536,252 @@
                 statusEl.textContent = 'Firebase SDK 加载错误';
                 statusEl.style.color = '#f56565';
             }
-
-            // 添加键盘导航支持
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    // ESC键关闭任何打开的模态框或菜单
-                }
-            });
-
-            // 预加载关键资源
-            const preloadImages = () => {
-                // 如果有项目图片，可以在这里预加载
-            };
-
-            preloadImages();
         });
 
-        // 添加一些实用函数
-        const utils = {
-            // 节流函数
-            throttle: (func, limit) => {
-                let inThrottle;
-                return function() {
-                    const args = arguments;
-                    const context = this;
-                    if (!inThrottle) {
-                        func.apply(context, args);
-                        inThrottle = true;
-                        setTimeout(() => inThrottle = false, limit);
-                    }
-                }
-            },
-
-            // 防抖函数
-            debounce: (func, delay) => {
-                let timeoutId;
-                return function (...args) {
-                    clearTimeout(timeoutId);
-                    timeoutId = setTimeout(() => func.apply(this, args), delay);
-                };
+        // Firebase 认证初始化
+        function initializeAuth() {
+            try {
+                firebase.auth().onAuthStateChanged((user) => {
+                    currentUser = user;
+                    updateAuthUI(user);
+                });
+            } catch (error) {
+                console.error('Firebase Auth 初始化失败:', error);
+                showError('认证系统初始化失败，请刷新页面重试');
             }
-        };
+        }
+
+        // 更新认证UI
+        function updateAuthUI(user) {
+            const authButtons = document.getElementById('auth-buttons');
+            const userMenu = document.getElementById('user-menu');
+            const protectedContent = document.getElementById('protected-content');
+            
+            if (user) {
+                // 用户已登录
+                authButtons.style.display = 'none';
+                userMenu.style.display = 'block';
+                protectedContent.classList.add('show');
+                
+                // 更新用户信息
+                const userEmail = document.getElementById('user-email');
+                const userInitial = document.getElementById('user-initial');
+                
+                userEmail.textContent = user.email;
+                userInitial.textContent = user.email.charAt(0).toUpperCase();
+                
+                console.log('用户已登录:', user.email);
+            } else {
+                // 用户未登录
+                authButtons.style.display = 'flex';
+                userMenu.style.display = 'none';
+                protectedContent.classList.remove('show');
+                
+                console.log('用户未登录');
+            }
+        }
+
+        // 打开认证模态框
+        function openAuthModal(tab = 'login') {
+            const modal = document.getElementById('auth-modal');
+            modal.classList.add('show');
+            switchAuthTab(tab);
+            
+            // 清除之前的错误和成功消息
+            hideMessages();
+        }
+
+        // 关闭认证模态框
+        function closeAuthModal() {
+            const modal = document.getElementById('auth-modal');
+            modal.classList.remove('show');
+            
+            // 清除表单
+            document.getElementById('login-form').reset();
+            document.getElementById('register-form').reset();
+            hideMessages();
+        }
+
+        // 切换认证标签
+        function switchAuthTab(tab) {
+            const tabs = document.querySelectorAll('.auth-tab');
+            const forms = document.querySelectorAll('.auth-form');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            forms.forEach(f => f.classList.remove('active'));
+            
+            document.querySelector(`.auth-tab:${tab === 'login' ? 'first' : 'last'}-child`).classList.add('active');
+            document.getElementById(`${tab}-form`).classList.add('active');
+            
+            hideMessages();
+        }
+
+        // 处理登录
+        async function handleLogin(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const email = form.querySelector('input[type="email"]').value;
+            const password = form.querySelector('input[type="password"]').value;
+            const submitBtn = form.querySelector('.form-submit');
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = '登录中...';
+            
+            try {
+                await firebase.auth().signInWithEmailAndPassword(email, password);
+                showSuccess('登录成功！');
+                setTimeout(() => {
+                    closeAuthModal();
+                }, 1500);
+            } catch (error) {
+                console.error('登录失败:', error);
+                showError(getAuthErrorMessage(error.code));
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '登录';
+            }
+        }
+
+        // 处理注册
+        async function handleRegister(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const email = form.querySelector('input[type="email"]').value;
+            const password = form.querySelector('input[type="password"]').value;
+            const confirmPassword = form.querySelectorAll('input[type="password"]')[1].value;
+            const submitBtn = form.querySelector('.form-submit');
+            
+            if (password !== confirmPassword) {
+                showError('两次输入的密码不一致');
+                return;
+            }
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = '注册中...';
+            
+            try {
+                await firebase.auth().createUserWithEmailAndPassword(email, password);
+                showSuccess('注册成功！欢迎加入！');
+                setTimeout(() => {
+                    closeAuthModal();
+                }, 1500);
+            } catch (error) {
+                console.error('注册失败:', error);
+                showError(getAuthErrorMessage(error.code));
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '注册';
+            }
+        }
+
+        // Google 登录
+        async function signInWithGoogle() {
+            try {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                await firebase.auth().signInWithPopup(provider);
+                showSuccess('Google 登录成功！');
+                setTimeout(() => {
+                    closeAuthModal();
+                }, 1500);
+            } catch (error) {
+                console.error('Google 登录失败:', error);
+                showError(getAuthErrorMessage(error.code));
+            }
+        }
+
+        // 退出登录
+        async function logout() {
+            try {
+                await firebase.auth().signOut();
+                hideUserDropdown();
+                console.log('用户已退出登录');
+            } catch (error) {
+                console.error('退出登录失败:', error);
+                showError('退出登录失败，请重试');
+            }
+        }
+
+        // 切换用户下拉菜单
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('user-dropdown');
+            if (userDropdownVisible) {
+                hideUserDropdown();
+            } else {
+                showUserDropdown();
+            }
+        }
+
+        function showUserDropdown() {
+            const dropdown = document.getElementById('user-dropdown');
+            dropdown.classList.add('show');
+            userDropdownVisible = true;
+        }
+
+        function hideUserDropdown() {
+            const dropdown = document.getElementById('user-dropdown');
+            dropdown.classList.remove('show');
+            userDropdownVisible = false;
+        }
+
+        // 显示个人设置（占位功能）
+        function showProfile() {
+            hideUserDropdown();
+            alert('个人设置功能即将推出，敬请期待！');
+        }
+
+        // 显示错误消息
+        function showError(message) {
+            const errorEl = document.getElementById('auth-error');
+            const successEl = document.getElementById('auth-success');
+            
+            successEl.style.display = 'none';
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+        }
+
+        // 显示成功消息
+        function showSuccess(message) {
+            const errorEl = document.getElementById('auth-error');
+            const successEl = document.getElementById('auth-success');
+            
+            errorEl.style.display = 'none';
+            successEl.textContent = message;
+            successEl.style.display = 'block';
+        }
+
+        // 隐藏消息
+        function hideMessages() {
+            document.getElementById('auth-error').style.display = 'none';
+            document.getElementById('auth-success').style.display = 'none';
+        }
+
+        // 获取友好的错误消息
+        function getAuthErrorMessage(errorCode) {
+            const errorMessages = {
+                'auth/user-not-found': '用户不存在，请检查邮箱地址或先注册',
+                'auth/wrong-password': '密码错误，请重试',
+                'auth/email-already-in-use': '该邮箱已被注册，请使用其他邮箱或尝试登录',
+                'auth/weak-password': '密码强度不够，请使用至少6位字符',
+                'auth/invalid-email': '邮箱格式不正确',
+                'auth/operation-not-allowed': '该登录方式未启用',
+                'auth/too-many-requests': '请求过于频繁，请稍后再试',
+                'auth/network-request-failed': '网络连接失败，请检查网络设置',
+                'auth/popup-closed-by-user': '登录窗口被关闭',
+                'auth/cancelled-popup-request': '登录请求被取消'
+            };
+            
+            return errorMessages[errorCode] || '操作失败，请重试';
+        }
+
+        // ESC键关闭模态框
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeAuthModal();
+                hideUserDropdown();
+            }
+        });
     </script>
 </body>
 </html>
