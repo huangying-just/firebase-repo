@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>HUANGYING - 项目作品集</title>
-    <meta name="description" content="黄莹的项目作品集 - 展示创新的技术项目和解决方案">
+    <meta name="description" content="HUANGYING的项目作品集 - 展示创新的技术项目和解决方案">
     
     <!-- Firebase SDK -->
     <script defer src="/__/firebase/12.0.0/firebase-app-compat.js"></script>
@@ -602,6 +602,287 @@
             margin-top: 0.5rem;
         }
 
+        /* 博客区域 */
+        .blog {
+            padding: 6rem 0;
+            background: linear-gradient(180deg, #16213e 0%, #1a1a2e 100%);
+        }
+
+        .blog-login-prompt {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--bg-glass);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            margin: 2rem auto;
+            max-width: 600px;
+        }
+
+        .login-prompt-content i {
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 2rem;
+        }
+
+        .login-prompt-content h3 {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .login-prompt-content p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .blog-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-gradient);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .blog-card {
+            background: var(--bg-glass);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideInUp 0.6s ease forwards;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-bold);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .blog-card-image {
+            position: relative;
+            height: 220px;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .blog-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover .blog-card-image img {
+            transform: scale(1.05);
+        }
+
+        .blog-card-image i {
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .blog-card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .blog-card:hover .blog-card-overlay {
+            opacity: 1;
+        }
+
+        .read-more-btn {
+            padding: 0.6rem 1.2rem;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
+        }
+
+        .read-more-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .blog-card-content {
+            padding: 1.8rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .blog-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .blog-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .blog-title:hover {
+            color: #667eea;
+        }
+
+        .blog-excerpt {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .blog-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .blog-tag {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            padding: 0.3rem 0.7rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .blog-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .blog-author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .blog-share-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .blog-share-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .blog-pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .pagination-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .pagination-btn {
+            padding: 0.6rem 1rem;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-btn:hover,
+        .pagination-btn.active {
+            background: var(--primary-gradient);
+            color: white;
+            border-color: transparent;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* 项目展示区域 */
         .projects {
             padding: 8rem 0;
@@ -874,6 +1155,29 @@
         @media (max-width: 768px) {
             .nav-menu {
                 display: none;
+            }
+            
+            .blog-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .blog-filters {
+                gap: 0.5rem;
+            }
+            
+            .filter-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            
+            .blog-login-prompt {
+                margin: 1rem auto;
+                padding: 2rem 1rem;
+            }
+            
+            .login-prompt-content h3 {
+                font-size: 1.5rem;
             }
             
             .projects-grid {
@@ -1275,6 +1579,50 @@
         </div>
     </section>
 
+    <!-- 博客区域 -->
+    <section id="blog" class="blog">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">技术博客</h2>
+                <p class="section-subtitle">
+                    分享技术心得、项目经验和开发感悟，记录我的技术成长历程。
+                </p>
+            </div>
+            
+            <!-- 未登录状态 -->
+            <div id="blog-login-prompt" class="blog-login-prompt">
+                <div class="login-prompt-content">
+                    <i class="fas fa-lock"></i>
+                    <h3>登录后查看博客内容</h3>
+                    <p>注册并登录后，您可以阅读我的技术博客文章，获取更多深度技术分享。</p>
+                    <button class="btn btn-primary" onclick="openAuthModal('login')">
+                        <i class="fas fa-sign-in-alt"></i>
+                        立即登录
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 已登录状态 - 博客内容 -->
+            <div id="blog-content" class="blog-content" style="display: none;">
+                <div class="blog-filters">
+                    <button class="filter-btn active" data-filter="all">全部文章</button>
+                    <button class="filter-btn" data-filter="项目启动">项目启动</button>
+                    <button class="filter-btn" data-filter="Firebase">Firebase</button>
+                    <button class="filter-btn" data-filter="Web开发">Web开发</button>
+                    <button class="filter-btn" data-filter="技术教程">技术教程</button>
+                </div>
+                
+                <div class="blog-grid" id="blog-grid">
+                    <!-- 博客文章将通过JavaScript动态加载 -->
+                </div>
+                
+                <div class="blog-pagination" id="blog-pagination">
+                    <!-- 分页将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- 技能栈展示 -->
     <section id="skills" class="skills">
         <div class="container">
@@ -1556,12 +1904,21 @@
             const authButtons = document.getElementById('auth-buttons');
             const userMenu = document.getElementById('user-menu');
             const protectedContent = document.getElementById('protected-content');
+            const blogLoginPrompt = document.getElementById('blog-login-prompt');
+            const blogContent = document.getElementById('blog-content');
             
             if (user) {
                 // 用户已登录
                 authButtons.style.display = 'none';
                 userMenu.style.display = 'block';
                 protectedContent.classList.add('show');
+                
+                // 显示博客内容，隐藏登录提示
+                if (blogLoginPrompt) blogLoginPrompt.style.display = 'none';
+                if (blogContent) {
+                    blogContent.style.display = 'block';
+                    loadBlogArticles();
+                }
                 
                 // 更新用户信息
                 const userEmail = document.getElementById('user-email');
@@ -1576,6 +1933,10 @@
                 authButtons.style.display = 'flex';
                 userMenu.style.display = 'none';
                 protectedContent.classList.remove('show');
+                
+                // 显示博客登录提示，隐藏博客内容
+                if (blogLoginPrompt) blogLoginPrompt.style.display = 'block';
+                if (blogContent) blogContent.style.display = 'none';
                 
                 console.log('用户未登录');
             }
@@ -1775,11 +2136,413 @@
             return errorMessages[errorCode] || '操作失败，请重试';
         }
 
+        // 博客管理功能
+        let blogArticles = [];
+        let currentFilter = 'all';
+        let currentPage = 1;
+        const articlesPerPage = 6;
+
+        // 模拟博客文章数据（按时间倒序）
+        function getBlogArticles() {
+            return [
+                {
+                    id: 'firebase-auth-guide',
+                    title: 'Firebase Authentication 完整实现指南',
+                    date: '2025-01-27',
+                    author: 'HUANGYING',
+                    tags: ['Firebase', '认证', 'Web安全', '技术教程'],
+                    excerpt: '详细介绍如何在Web应用中集成Firebase Authentication，包括邮箱登录、Google登录和用户状态管理。',
+                    content: '在现代Web应用开发中，用户认证是必不可少的功能...',
+                    readingTime: '约 8 分钟阅读'
+                },
+                {
+                    id: 'project-launch',
+                    title: '项目作品集网站正式上线！',
+                    date: '2025-01-27',
+                    author: 'HUANGYING',
+                    tags: ['项目启动', 'Firebase', 'Web开发'],
+                    excerpt: '经过一天的开发，我的个人项目作品集网站终于正式上线了！这篇文章记录了整个开发过程和技术选型。',
+                    content: '今天是一个值得纪念的日子！经过一天紧张而充实的开发工作...',
+                    readingTime: '约 5 分钟阅读'
+                },
+                {
+                    id: 'astro-experience',
+                    title: '探索Astro：现代静态站点生成器',
+                    date: '2025-01-26',
+                    author: 'HUANGYING',
+                    tags: ['Astro', 'Web开发', '性能优化'],
+                    excerpt: 'Astro是一个现代化的静态站点生成器，专注于性能和开发体验。本文分享我使用Astro的实践经验。',
+                    content: 'Astro是一个革命性的前端框架，它改变了我们构建网站的方式...',
+                    readingTime: '约 6 分钟阅读'
+                },
+                {
+                    id: 'web-performance',
+                    title: 'Web性能优化实战指南',
+                    date: '2025-01-25',
+                    author: 'HUANGYING',
+                    tags: ['性能优化', 'Web开发', '技术教程'],
+                    excerpt: '分享Web性能优化的实用技巧和最佳实践，帮助你构建更快速的Web应用。',
+                    content: 'Web性能对用户体验至关重要。本文将介绍各种优化技术...',
+                    readingTime: '约 7 分钟阅读'
+                },
+                {
+                    id: 'react-hooks',
+                    title: 'React Hooks深度解析',
+                    date: '2025-01-24',
+                    author: 'HUANGYING',
+                    tags: ['React', 'JavaScript', '技术教程'],
+                    excerpt: '深入探讨React Hooks的工作原理、最佳实践和常见陷阱，助你成为Hook大师。',
+                    content: 'React Hooks彻底改变了React应用的编写方式...',
+                    readingTime: '约 9 分钟阅读'
+                },
+                {
+                    id: 'css-grid-guide',
+                    title: 'CSS Grid布局完全指南',
+                    date: '2025-01-23',
+                    author: 'HUANGYING',
+                    tags: ['CSS', 'Web开发', '布局'],
+                    excerpt: 'CSS Grid是强大的二维布局系统。本文将带你全面掌握Grid布局的各种技巧。',
+                    content: 'CSS Grid为Web布局带来了革命性的变化...',
+                    readingTime: '约 10 分钟阅读'
+                }
+            ];
+        }
+
+        // 加载博客文章
+        function loadBlogArticles() {
+            blogArticles = getBlogArticles();
+            renderBlogArticles();
+            setupBlogFilters();
+        }
+
+        // 渲染博客文章
+        function renderBlogArticles(filter = 'all', page = 1) {
+            const blogGrid = document.getElementById('blog-grid');
+            if (!blogGrid) return;
+
+            let filteredArticles = blogArticles;
+            if (filter !== 'all') {
+                filteredArticles = blogArticles.filter(article => 
+                    article.tags.includes(filter)
+                );
+            }
+
+            const startIndex = (page - 1) * articlesPerPage;
+            const endIndex = startIndex + articlesPerPage;
+            const pageArticles = filteredArticles.slice(startIndex, endIndex);
+
+            blogGrid.innerHTML = pageArticles.map(article => `
+                <article class="blog-card" data-tags="${article.tags.join(',')}">
+                    <div class="blog-card-image">
+                        <i class="fas fa-file-alt"></i>
+                        <div class="blog-card-overlay">
+                            <button class="read-more-btn" onclick="openBlogArticle('${article.id}')">
+                                阅读全文
+                            </button>
+                        </div>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">
+                                <i class="fas fa-calendar"></i>
+                                ${formatDate(article.date)}
+                            </span>
+                            <span class="blog-reading-time">
+                                <i class="fas fa-clock"></i>
+                                ${article.readingTime}
+                            </span>
+                        </div>
+                        <h3 class="blog-title" onclick="openBlogArticle('${article.id}')">${article.title}</h3>
+                        <p class="blog-excerpt">${article.excerpt}</p>
+                        <div class="blog-tags">
+                            ${article.tags.map(tag => 
+                                `<span class="blog-tag">${tag}</span>`
+                            ).join('')}
+                        </div>
+                        <div class="blog-footer">
+                            <span class="blog-author">
+                                <i class="fas fa-user"></i>
+                                ${article.author}
+                            </span>
+                            <button class="blog-share-btn" onclick="shareBlogArticle('${article.id}')">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+
+            // 渲染分页
+            renderBlogPagination(filteredArticles.length, page);
+        }
+
+        // 设置博客过滤器
+        function setupBlogFilters() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    
+                    currentFilter = e.target.dataset.filter;
+                    currentPage = 1;
+                    renderBlogArticles(currentFilter, currentPage);
+                });
+            });
+        }
+
+        // 渲染分页
+        function renderBlogPagination(totalArticles, currentPage) {
+            const pagination = document.getElementById('blog-pagination');
+            if (!pagination) return;
+
+            const totalPages = Math.ceil(totalArticles / articlesPerPage);
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+
+            let paginationHTML = '<div class="pagination-buttons">';
+            
+            for (let i = 1; i <= totalPages; i++) {
+                const activeClass = i === currentPage ? 'active' : '';
+                paginationHTML += `
+                    <button class="pagination-btn ${activeClass}" onclick="goToBlogPage(${i})">
+                        ${i}
+                    </button>
+                `;
+            }
+            
+            paginationHTML += '</div>';
+            pagination.innerHTML = paginationHTML;
+        }
+
+        // 跳转到指定页面
+        function goToBlogPage(page) {
+            currentPage = page;
+            renderBlogArticles(currentFilter, page);
+        }
+
+        // 打开博客文章详情
+        function openBlogArticle(articleId) {
+            const article = blogArticles.find(a => a.id === articleId);
+            if (!article) return;
+
+            // 创建文章详情模态框
+            const modal = createBlogModal(article);
+            document.body.appendChild(modal);
+            
+            // 显示模态框
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+        }
+
+        // 创建博客文章模态框
+        function createBlogModal(article) {
+            const modal = document.createElement('div');
+            modal.className = 'article-modal';
+            modal.innerHTML = `
+                <div class="article-modal-content">
+                    <button class="article-close" onclick="this.closest('.article-modal').remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="article-header">
+                        <h1>${article.title}</h1>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> ${formatDate(article.date)}</span>
+                            <span><i class="fas fa-user"></i> ${article.author}</span>
+                            <span><i class="fas fa-clock"></i> ${article.readingTime}</span>
+                        </div>
+                        <div class="article-tags">
+                            ${article.tags.map(tag => `<span class="blog-tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="article-content">
+                        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">${article.excerpt}</p>
+                        <div style="line-height: 1.8;">${article.content}</div>
+                        
+                        <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #eee;">
+                            <h3>分享这篇文章</h3>
+                            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                                <button onclick="shareBlogArticle('${article.id}')" style="padding: 0.5rem 1rem; background: var(--primary-gradient); color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                    <i class="fas fa-share-alt"></i> 分享
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // 添加模态框样式
+            addBlogModalStyles();
+            return modal;
+        }
+
+        // 添加博客模态框样式
+        function addBlogModalStyles() {
+            if (document.getElementById('blog-modal-styles')) return;
+
+            const style = document.createElement('style');
+            style.id = 'blog-modal-styles';
+            style.textContent = `
+                .article-modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.9);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 3000;
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: all 0.3s ease;
+                }
+
+                .article-modal.show {
+                    opacity: 1;
+                    visibility: visible;
+                }
+
+                .article-modal-content {
+                    background: white;
+                    border-radius: 20px;
+                    max-width: 800px;
+                    width: 90%;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                    position: relative;
+                    transform: scale(0.9);
+                    transition: transform 0.3s ease;
+                }
+
+                .article-modal.show .article-modal-content {
+                    transform: scale(1);
+                }
+
+                .article-close {
+                    position: absolute;
+                    top: 1rem;
+                    right: 1rem;
+                    background: rgba(0, 0, 0, 0.1);
+                    border: none;
+                    border-radius: 50%;
+                    width: 40px;
+                    height: 40px;
+                    cursor: pointer;
+                    z-index: 10;
+                    transition: background 0.3s ease;
+                }
+
+                .article-close:hover {
+                    background: rgba(0, 0, 0, 0.2);
+                }
+
+                .article-header {
+                    padding: 2rem 2rem 1rem;
+                    border-bottom: 1px solid #eee;
+                }
+
+                .article-header h1 {
+                    font-size: 2rem;
+                    margin-bottom: 1rem;
+                    color: #2d3748;
+                    line-height: 1.3;
+                }
+
+                .article-meta {
+                    display: flex;
+                    gap: 1rem;
+                    font-size: 0.9rem;
+                    color: #718096;
+                    flex-wrap: wrap;
+                    margin-bottom: 1rem;
+                }
+
+                .article-meta span {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                }
+
+                .article-tags {
+                    display: flex;
+                    gap: 0.5rem;
+                    flex-wrap: wrap;
+                }
+
+                .article-content {
+                    padding: 2rem;
+                    line-height: 1.8;
+                    color: #2d3748;
+                }
+
+                @media (max-width: 768px) {
+                    .article-modal-content {
+                        width: 95%;
+                        margin: 1rem;
+                    }
+
+                    .article-header {
+                        padding: 1.5rem 1rem 1rem;
+                    }
+
+                    .article-header h1 {
+                        font-size: 1.5rem;
+                    }
+
+                    .article-content {
+                        padding: 1rem;
+                    }
+                }
+            `;
+
+            document.head.appendChild(style);
+        }
+
+        // 分享博客文章
+        function shareBlogArticle(articleId) {
+            const article = blogArticles.find(a => a.id === articleId);
+            if (!article) return;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: article.title,
+                    text: article.excerpt,
+                    url: window.location.href + '#blog'
+                });
+            } else {
+                const url = window.location.href + '#blog';
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('链接已复制到剪贴板！');
+                });
+            }
+        }
+
+        // 格式化日期
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('zh-CN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
         // ESC键关闭模态框
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeAuthModal();
                 hideUserDropdown();
+                
+                // 关闭博客文章模态框
+                const articleModal = document.querySelector('.article-modal');
+                if (articleModal) {
+                    articleModal.remove();
+                }
             }
         });
     </script>
