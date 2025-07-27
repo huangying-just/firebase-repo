@@ -501,9 +501,32 @@
         .hero-subtitle {
             font-size: clamp(1.2rem, 3vw, 1.8rem);
             color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             font-weight: 300;
             animation: slideUp 1s ease-out 0.2s both;
+        }
+
+        .hero-slogan {
+            font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            background: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideUp 1s ease-out 0.3s both;
+            text-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .hero-slogan-sub {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            animation: slideUp 1s ease-out 0.35s both;
         }
 
         .hero-description {
@@ -1157,6 +1180,18 @@
                 display: none;
             }
             
+            .hero-slogan {
+                font-size: 1.3rem;
+                margin-bottom: 0.3rem;
+                letter-spacing: 0.03em;
+            }
+            
+            .hero-slogan-sub {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+                letter-spacing: 0.01em;
+            }
+            
             .blog-grid {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
@@ -1394,6 +1429,8 @@
         <div class="hero-content">
             <h1 class="hero-title">创新技术解决方案</h1>
             <p class="hero-subtitle">全栈开发工程师 & 技术创新者</p>
+            <div class="hero-slogan">Intelligence, Synchronized.</div>
+            <div class="hero-slogan-sub">智慧，同步进化</div>
             <p class="hero-description">
                 专注于现代Web技术、云原生应用和人工智能解决方案。
                 致力于将创意转化为高质量的数字产品，推动技术创新和用户体验优化。
